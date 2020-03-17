@@ -1,5 +1,9 @@
 package com.tcp.toeflserver.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,14 +11,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
+@Getter
+@Setter
+@JsonIgnoreProperties({"authority", "enabled"})
 public class CustomUser  implements UserDetails {
 
     private String id;
-    private String password;
     private String email;
     private String nickname;
     private String authority;
     private Boolean enabled;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -31,14 +39,6 @@ public class CustomUser  implements UserDetails {
     @Override
     public String getUsername() {
         return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getNickname() {
-        return nickname;
     }
 
     @Override
@@ -60,4 +60,6 @@ public class CustomUser  implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
 }
+
