@@ -13,7 +13,7 @@ import java.util.Collection;
 
 @Getter
 @Setter
-@JsonIgnoreProperties({"authority", "enabled"})
+@JsonIgnoreProperties({"authority", "enabled", "username", "authorities", "accountNonExpired", "accountNonLocked", "credentialsNonExpired"})
 public class CustomUser  implements UserDetails {
 
     private String id;
@@ -27,7 +27,7 @@ public class CustomUser  implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
-        auth.add(new SimpleGrantedAuthority(authority));
+        auth.add(new SimpleGrantedAuthority("ROLE_USER"));
         return auth;
     }
 

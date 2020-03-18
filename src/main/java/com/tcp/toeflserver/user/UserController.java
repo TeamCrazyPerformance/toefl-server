@@ -16,14 +16,9 @@ public class UserController {
     @ResponseBody
     public HashMap<String, Object> signUp(@RequestBody CustomUser user){
         HashMap<String, Object> responseBody = new HashMap();
-        int signUpResult = customUserDetailsService.signUpUser(user);
 
-        responseBody.put("success", isSuccess(signUpResult));
+        responseBody.put("success", customUserDetailsService.signUp(user));
         return responseBody;
-    }
-
-    private boolean isSuccess(int result) {
-        return result > 0 ? true : false;
     }
 }
 

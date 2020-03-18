@@ -2,6 +2,7 @@ package com.tcp.toeflserver.user;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
@@ -19,8 +20,7 @@ public class CustomUserDAO {
         return sqlSession.selectOne("user.selectUserByEmail", email);
     }
 
-    public int saveUser(CustomUser user){
-        //@TODO exception handling implement
-        return sqlSession.insert("user.insertUser", user);
+    public void saveUser(CustomUser user) throws DataAccessException{
+        sqlSession.insert("user.insertUser", user);
     }
 }
