@@ -1,5 +1,6 @@
 package com.tcp.toeflserver.user;
 
+import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -7,20 +8,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CustomUserDAO {
+public class CustomUserRepository {
+    private final CustomUserMapper mapper;
 
     @Autowired
-    private SqlSessionTemplate sqlSession;
-
-    public CustomUser findUserById(String id){
-        return sqlSession.selectOne("user.selectUserById", id);
+    public CustomUserRepository(SqlSessionTemplate sqlSession){
+        this.mapper = sqlSession.getMapper(CustomUserMapper.class);
     }
 
-    public CustomUser findUserByEmail(String email){
-        return sqlSession.selectOne("user.selectUserByEmail", email);
+    public CustomUser findUserById(String id){
+        return mapper.selectUserById(id);
+    }
+
+    public CustomUser findUserByEmail(String email)
+    {
+        return mapper.selectUserByEmail(email);
     }
 
     public void saveUser(CustomUser user) throws DataAccessException{
-        sqlSession.insert("user.insertUser", user);
+        mapper.insertUser(user);
     }
 }

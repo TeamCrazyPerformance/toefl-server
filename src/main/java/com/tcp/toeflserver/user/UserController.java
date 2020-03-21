@@ -12,7 +12,7 @@ public class UserController {
 
     private final CustomUserDetailsService customUserDetailsService;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     @ResponseBody
     public HashMap<String, Object> signUp(@RequestBody CustomUser user){
         HashMap<String, Object> responseBody = new HashMap();
