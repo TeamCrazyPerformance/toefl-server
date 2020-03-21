@@ -13,4 +13,7 @@ public interface CustomUserMapper {
 
     @Select("select * from user where email=#{email}")
     CustomUser selectUserByEmail(String email);
+
+    @Select("select * from user where nickname=#{nickname}")
+    CustomUser selectUserByNickname(String nickname);
 }

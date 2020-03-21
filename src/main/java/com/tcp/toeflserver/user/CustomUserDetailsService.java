@@ -36,4 +36,12 @@ public class CustomUserDetailsService implements UserDetailsService {
             return false;
         }
     }
+
+    public boolean isAvailableForId(String id){
+        return customUserRepository.findUserById(id) == null;
+    }
+
+    public boolean isAvailableForNickname(String nickname){
+        return customUserRepository.findUserByNickname(nickname) == null;
+    }
 }

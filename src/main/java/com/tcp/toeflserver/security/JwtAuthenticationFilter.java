@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tcp.toeflserver.data.LoginData;
 import com.tcp.toeflserver.user.CustomUser;
+import com.tcp.toeflserver.user.UserApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,7 +32,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         LoginData credentials = null;
 
-        try{
+        try {
             credentials = new ObjectMapper().readValue(request.getInputStream(), LoginData.class);
         } catch (IOException e) {
             e.printStackTrace();
@@ -49,15 +50,32 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        CustomUser user = (CustomUser)authResult.getPrincipal();
+        CustomUser user = (CustomUser) authResult.getPrincipal();
         ObjectMapper objectMapper = new ObjectMapper();
+        UserApiResponse responseBody;
 
         String token = JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
                 .sign(Algorithm.HMAC256(JwtProperties.SECRET.getBytes()));
 
-        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + token);
-        response.getWriter().write(objectMapper.writeValueAsString(user));
+        responseBody = UserApiResponse.builder()
+                .success(true)
+                .token(JwtProperties.TOKEN_PREFIX + token)
+                .userInformation(user)
+                .build();
+
+        response.getWriter().write(objectMapper.writeValueAsString(responseBody));
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        UserApiResponse responseBody = UserApiResponse.builder()
+                .success(false)
+                .build();
+
+        response.setStatus(403);
+        response.getWriter().write(objectMapper.writeValueAsString(responseBody));
     }
 }

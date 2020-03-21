@@ -25,6 +25,10 @@ public class CustomUserRepository {
         return mapper.selectUserByEmail(email);
     }
 
+    public CustomUser findUserByNickname(String nickname){
+        return mapper.selectUserByNickname(nickname);
+    }
+
     public void saveUser(CustomUser user) throws DataAccessException{
         mapper.insertUser(user);
     }
