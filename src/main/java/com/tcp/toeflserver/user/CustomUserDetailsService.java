@@ -2,6 +2,7 @@ package com.tcp.toeflserver.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +24,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         return user;
+    }
+
+    public CustomUser findUserInformation(String id){
+        if(!id.equals(SecurityContextHolder.getContext().getAuthentication().getName())){
+            return null;
+        }
+
+        return customUserRepository.findUserById(id);
     }
 
     public boolean signUp(CustomUser user){
