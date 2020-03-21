@@ -28,7 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .addFilter(new JwtAuthenticationFilter(authenticationManager()))
             .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository))
             .authorizeRequests()
-            .antMatchers(HttpMethod.POST,"/login", "/user").permitAll()
+            .antMatchers(HttpMethod.PUT, "/user/id/confirmrepetition", "/user/nickname/confirmrepetition").permitAll()
+            .antMatchers(HttpMethod.POST,"/login", "/user", "/user/email", "/user/email/validation").permitAll()
             .anyRequest().authenticated();
     }
 
