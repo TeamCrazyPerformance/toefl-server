@@ -30,3 +30,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### private properties ###
+application-private.properties
