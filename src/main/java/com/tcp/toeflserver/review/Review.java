@@ -5,6 +5,7 @@ import org.apache.ibatis.type.Alias;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 import java.util.Date;
 @Data
 @Alias("review")
@@ -29,5 +30,4 @@ public class Review {
         this.content = review.content;
         this.date = date;
     }
-
 }
