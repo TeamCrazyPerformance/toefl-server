@@ -57,6 +57,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     public boolean isAvailableForEmail(String email){
-        return customUserRepository.findUserByNickname(email) == null;
+        return customUserRepository.findUserByEmail(email) == null;
     }
 }
