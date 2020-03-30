@@ -28,12 +28,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         return user;
     }
 
-    public CustomUser findUserInformation(String id){
-        if(!id.equals(SecurityContextHolder.getContext().getAuthentication().getName())){
-            return null;
-        }
-
-        return customUserRepository.findUserById(id);
+    public CustomUser findMyInformation(){
+        return customUserRepository.findUserById(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
     public boolean signUp(CustomUser user){

@@ -44,9 +44,9 @@ public class UserController {
         return response;
     }
 
-    @GetMapping(value = "/{userId}")
-    public UserApiResponse getUserInformation(@PathVariable("userId") String id) {
-        CustomUser user = customUserDetailsService.findUserInformation(id);
+    @GetMapping(value = "/mypage")
+    public UserApiResponse getUserInformation() {
+        CustomUser user = customUserDetailsService.findMyInformation();
         UserApiResponse response =UserApiResponse.builder()
                 .success(user != null)
                 .userInformation(Optional.ofNullable(user).orElse(new CustomUser()))
