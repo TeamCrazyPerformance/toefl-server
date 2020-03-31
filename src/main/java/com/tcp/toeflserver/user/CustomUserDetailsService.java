@@ -1,5 +1,6 @@
 package com.tcp.toeflserver.user;
 
+import com.tcp.toeflserver.mail.ValidateCache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     private final CustomUserRepository customUserRepository;
+    private final ValidateCache validateCache;
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
@@ -26,17 +28,17 @@ public class CustomUserDetailsService implements UserDetailsService {
         return user;
     }
 
-    public CustomUser findUserInformation(String id){
-        if(!id.equals(SecurityContextHolder.getContext().getAuthentication().getName())){
-            return null;
-        }
-
-        return customUserRepository.findUserById(id);
+    public CustomUser findMyInformation(){
+        return customUserRepository.findUserById(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
     public boolean signUp(CustomUser user){
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        if(!validateCache.isValidated(user.getEmail())){
+            return false;
+        };
 
         try{
             customUserRepository.saveUser(user);
@@ -52,5 +54,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public boolean isAvailableForNickname(String nickname){
         return customUserRepository.findUserByNickname(nickname) == null;
+    }
+
+    public boolean isAvailableForEmail(String email){
+        return customUserRepository.findUserByEmail(email) == null;
     }
 }
