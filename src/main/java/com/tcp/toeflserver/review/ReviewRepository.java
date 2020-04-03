@@ -20,9 +20,14 @@ public class ReviewRepository {
         return true;
     }
 
-    public boolean insertReview(Review review) {
-        reviewMapper.insertReview(review);
-        return true;
+    public String insertReview(Review review) {
+        try {
+            reviewMapper.insertReview(review);
+            return "Success";
+        }
+        catch (Exception e){
+            return e.getMessage();
+        }
     }
 
     public List<Review> selectReviewsByPlace(SelectReview selectReview) {

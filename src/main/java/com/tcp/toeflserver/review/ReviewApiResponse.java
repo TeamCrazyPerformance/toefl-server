@@ -9,11 +9,11 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 public class ReviewApiResponse {
-    boolean success;
+    String success;
     List<Review> reviewList;
 
     @Builder
-    public ReviewApiResponse(boolean success, List<Review> reviewList) {
+    public ReviewApiResponse(String success, List<Review> reviewList) {
         this.success = success;
         this.reviewList = reviewList;
     }

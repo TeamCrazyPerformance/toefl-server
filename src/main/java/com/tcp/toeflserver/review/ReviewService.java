@@ -23,13 +23,25 @@ public class ReviewService {
         return reviewRepository.selectReviewsByPlace(selectReview);
     }
 
-    public boolean removeReview(int index){
-        return reviewRepository.deleteReview(index);
+    public String removeReview(int index) {
+        try {
+            reviewRepository.deleteReview(index);
+        }
+        catch (Exception e){
+           return e.getMessage();
+        }
+        return "Success";
     }
 
-    public boolean addReview(Review review){
-        Review addReview = new Review(review,getDate());
-        return reviewRepository.insertReview(addReview);
+    public String addReview(Review review){
+        try {
+            Review addReview = new Review(review, getDate());
+            reviewRepository.insertReview(addReview);
+        }
+        catch (Exception e){
+            return e.getMessage();
+        }
+        return "Success";
     }
 
     private String getDate(){

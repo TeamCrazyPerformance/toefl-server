@@ -36,7 +36,7 @@ public class ReviewController {
 
     @PostMapping
     public ReviewApiResponse addReview(@RequestBody Review review){
-        boolean added = reviewService.addReview(review);
+        String added = reviewService.addReview(review);
 
         ReviewApiResponse response = ReviewApiResponse.builder()
                 .success(added)
@@ -48,7 +48,7 @@ public class ReviewController {
     @DeleteMapping("/{reviewId}")
     public ReviewApiResponse deleteReview(@PathVariable String reviewId){
         int index = Integer.parseInt(reviewId);
-        boolean deleted = reviewService.removeReview(index);
+        String deleted = reviewService.removeReview(index);
 
         ReviewApiResponse response = ReviewApiResponse.builder()
                 .success(deleted)
