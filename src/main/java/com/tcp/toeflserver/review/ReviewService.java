@@ -15,12 +15,12 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
 
 
-    public List<Review> getReviewsByUserId(String user_id){
-        return reviewRepository.selectReviewsByUserId(user_id);
+    public List<Review> getReviewsByUser(SelectReview selectReview){
+        return reviewRepository.selectReviewsByUser(selectReview);
     }
 
-    public List<Review> getReviewsByPlaceId(String user_id){
-        return reviewRepository.selectReviewsByPlaceId(user_id);
+    public List<Review> getReviewsByPlace(SelectReview selectReview){
+        return reviewRepository.selectReviewsByPlace(selectReview);
     }
 
     public boolean removeReview(int index){

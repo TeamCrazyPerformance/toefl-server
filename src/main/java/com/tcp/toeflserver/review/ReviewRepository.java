@@ -2,9 +2,10 @@ package com.tcp.toeflserver.review;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public class ReviewRepository {
 
     private final ReviewMapper reviewMapper;
@@ -24,13 +25,13 @@ public class ReviewRepository {
         return true;
     }
 
-    public List<Review> selectReviewsByPlaceId(String placeId) {
-        List<Review> reviews = reviewMapper.selectReviewsByPlaceId(placeId);
+    public List<Review> selectReviewsByPlace(SelectReview selectReview) {
+        List<Review> reviews = reviewMapper.selectReviewsByPlace(selectReview);
         return  reviews;
     }
 
-    public List<Review> selectReviewsByUserId(String userId) {
-        List<Review> reviews = reviewMapper.selectReviewsByUserId(userId);
+    public List<Review> selectReviewsByUser(SelectReview selectReview) {
+        List<Review> reviews = reviewMapper.selectReviewsByUser(selectReview);
         return  reviews;
     }
 }
