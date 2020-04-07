@@ -35,7 +35,7 @@ public class ReviewService {
 
     public String addReview(Review review){
         try {
-            Review addReview = new Review(review, getDate());
+            Review addReview = new Review(review);
             reviewRepository.insertReview(addReview);
         }
         catch (Exception e){
