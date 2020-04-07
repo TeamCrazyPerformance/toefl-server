@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ReviewMapper {
 
-    @Select("SELECT * FROM ( SELECT *, ROW_NUMBER() OVER (ORDER BY 'time' ${order}) rnum FROM review WHERE user_id=#{id})reviews WHERE rnum BETWEEN (#{page}-1)*20 AND #{page}*20")
+    @Select("SELECT * FROM ( SELECT *, ROW_NUMBER() OVER (ORDER BY 'date' ${order}) rnum FROM review WHERE user_id=#{id})reviews WHERE rnum BETWEEN (#{page}-1)*20 AND #{page}*20")
     @ResultType(com.tcp.toeflserver.review.Review.class)
     List<Review> selectReviewsByUser(SelectReview review);
 
