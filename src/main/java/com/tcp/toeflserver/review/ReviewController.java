@@ -23,8 +23,8 @@ public class ReviewController {
         return response;
     }
 
-    @PostMapping("/user/{userId}")
-    public ReviewApiResponse postReviewsByUser(@RequestParam SelectReview selectReview){
+    @GetMapping("/user")
+    public ReviewApiResponse getReviewsByUser(@RequestParam SelectReview selectReview){
         List<Review> reviews = reviewService.getReviewsByUser(selectReview);
 
         ReviewApiResponse response = ReviewApiResponse.builder()
