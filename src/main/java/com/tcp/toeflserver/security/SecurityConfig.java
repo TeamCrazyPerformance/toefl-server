@@ -34,8 +34,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
             .antMatchers(HttpMethod.PUT, "/user/id/confirmrepetition", "/user/nickname/confirmrepetition").permitAll()
-            .antMatchers(HttpMethod.POST,"/login", "/user", "/user/email", "/user/email/validation").permitAll()
-            .anyRequest().authenticated().and()
+            .antMatchers(HttpMethod.POST,"/login", "/user").permitAll()
+            .antMatchers("/user/email/validation").authenticated()
+            .anyRequest().hasRole("USER").and()
             .cors();
     }
 
