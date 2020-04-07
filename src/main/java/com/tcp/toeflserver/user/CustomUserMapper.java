@@ -2,6 +2,7 @@ package com.tcp.toeflserver.user;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 public interface CustomUserMapper {
 
@@ -16,4 +17,7 @@ public interface CustomUserMapper {
 
     @Select("select * from user where nickname=#{nickname}")
     CustomUser selectUserByNickname(String nickname);
+
+    @Update("update user set authority=#{authority} where id=#{id}")
+    void updateAuthority(String id, String authority);
 }
