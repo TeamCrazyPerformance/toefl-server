@@ -12,7 +12,7 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @GetMapping("/place/{placeId}")
+    @GetMapping("/place")
     public ReviewApiResponse getReviewByPlace(@RequestParam SelectReview selectReview){
         List<Review> reviews = reviewService.getReviewsByPlace(selectReview);
 
@@ -36,7 +36,8 @@ public class ReviewController {
 
     @PostMapping
     public ReviewApiResponse addReview(@RequestBody Review review){
-        String added = reviewService.addReview(review);
+        Review addReview = new Review(review);
+        String added = reviewService.addReview(addReview);
 
         ReviewApiResponse response = ReviewApiResponse.builder()
                 .success(added)
