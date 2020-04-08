@@ -3,9 +3,6 @@ package com.tcp.toeflserver.review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -43,14 +40,4 @@ public class ReviewService {
         }
         return "Success";
     }
-
-    private String getDate(){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        System.out.println(dtf.format(now));
-        String date = dtf.format(now);
-
-        return date;
-    }
-
 }
