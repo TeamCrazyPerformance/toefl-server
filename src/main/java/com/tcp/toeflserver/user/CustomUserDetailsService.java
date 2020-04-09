@@ -64,12 +64,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     public void grantRoleUser() throws DataAccessException {
-        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-        customUserRepository.updateAuthority(userId, "ROLE_USER");
+        customUserRepository.updateAuthority(findMyInformation().getId(), "ROLE_USER");
     }
 
     public String getOwnEmail() {
-        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-        return customUserRepository.findUserById(userId).getEmail();
+        return findMyInformation().getEmail();
+    }
+
+    boolean getOwnValidation(){
+        return findMyInformation().getAuthority().equals("ROLE_USER");
     }
 }

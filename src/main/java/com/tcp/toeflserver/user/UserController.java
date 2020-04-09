@@ -49,6 +49,7 @@ public class UserController {
         CustomUser user = customUserDetailsService.findMyInformation();
         UserApiResponse response =UserApiResponse.builder()
                 .success(user != null)
+                .validated(customUserDetailsService.getOwnValidation())
                 .userInformation(Optional.ofNullable(user).orElse(new CustomUser()))
                 .build();
 
