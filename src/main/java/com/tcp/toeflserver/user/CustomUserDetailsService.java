@@ -34,6 +34,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        if(!isSeoultechEmailFormat(user.getEmail())){
+            return false;
+        }
+
         try{
             customUserRepository.saveUser(user);
             return true;
