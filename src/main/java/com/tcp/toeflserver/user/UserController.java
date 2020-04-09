@@ -55,7 +55,7 @@ public class UserController {
         return response;
     }
 
-    @GetMapping ("/email/validation")
+    @PostMapping ("/email/sendValidationCode")
     public UserApiResponse generateOtp(){
         UserApiResponse response = UserApiResponse.builder()
                 .success(emailService.sendOtpMessage())
