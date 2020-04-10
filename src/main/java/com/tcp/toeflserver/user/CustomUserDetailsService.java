@@ -1,6 +1,5 @@
 package com.tcp.toeflserver.user;
 
-import com.tcp.toeflserver.mail.ValidateCache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     private final CustomUserRepository customUserRepository;
-    private final ValidateCache validateCache;
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
@@ -28,17 +26,17 @@ public class CustomUserDetailsService implements UserDetailsService {
         return user;
     }
 
-    public CustomUser findMyInformation(){
+    CustomUser findMyInformation(){
         return customUserRepository.findUserById(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
-    public boolean signUp(CustomUser user){
+    boolean signUp(CustomUser user){
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        if(!validateCache.isValidated(user.getEmail())){
+        if(!isSeoultechEmailFormat(user.getEmail())){
             return false;
-        };
+        }
 
         try{
             customUserRepository.saveUser(user);
@@ -48,15 +46,32 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
     }
 
-    public boolean isAvailableForId(String id){
+    boolean isAvailableForId(String id){
         return customUserRepository.findUserById(id) == null;
     }
 
-    public boolean isAvailableForNickname(String nickname){
+    boolean isAvailableForNickname(String nickname){
         return customUserRepository.findUserByNickname(nickname) == null;
     }
 
-    public boolean isAvailableForEmail(String email){
-        return customUserRepository.findUserByEmail(email) == null;
+    boolean isAvailableForEmail(String email){
+        return isSeoultechEmailFormat(email) && customUserRepository.findUserByEmail(email) == null;
+    }
+
+    private boolean isSeoultechEmailFormat(String email){
+        String emailFormat = "^[a-zA-Z0-9._$+-]+@seoultech.ac.kr";
+        return email.matches(emailFormat);
+    }
+
+    public void grantRoleUser() throws DataAccessException {
+        customUserRepository.updateAuthority(findMyInformation().getId(), "ROLE_USER");
+    }
+
+    public String getOwnEmail() {
+        return findMyInformation().getEmail();
+    }
+
+    boolean getOwnValidation(){
+        return findMyInformation().getAuthority().equals("ROLE_USER");
     }
 }

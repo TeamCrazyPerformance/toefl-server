@@ -8,12 +8,14 @@ import lombok.Getter;
 @Getter
 public class UserApiResponse {
     boolean success;
+    Boolean validated;
     String token;
     CustomUser userInformation;
 
     @Builder
-    public UserApiResponse(boolean success, String token, CustomUser userInformation){
+    public UserApiResponse(boolean success, Boolean validated, String token, CustomUser userInformation){
         this.success = success;
+        this.validated = validated;
         this.token = token;
         this.userInformation = userInformation;
     }

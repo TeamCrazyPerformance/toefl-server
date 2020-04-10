@@ -49,16 +49,17 @@ public class UserController {
         CustomUser user = customUserDetailsService.findMyInformation();
         UserApiResponse response =UserApiResponse.builder()
                 .success(user != null)
+                .validated(customUserDetailsService.getOwnValidation())
                 .userInformation(Optional.ofNullable(user).orElse(new CustomUser()))
                 .build();
 
         return response;
     }
 
-    @PostMapping ("/email")
-    public UserApiResponse generateOtp(@RequestBody HashMap<String, String> requestBody){
+    @PostMapping ("/email/sendValidationCode")
+    public UserApiResponse generateOtp(){
         UserApiResponse response = UserApiResponse.builder()
-                .success(emailService.sendOtpMessage(requestBody.get("email")))
+                .success(emailService.sendOtpMessage())
                 .build();
 
         return response;
@@ -67,7 +68,7 @@ public class UserController {
     @PostMapping("/email/validation")
     public UserApiResponse validateOtp(@RequestBody HashMap<String, String> requestBody){
         UserApiResponse response = UserApiResponse.builder()
-                .success(otpService.validateOtp(requestBody.get("email"), Integer.parseInt(requestBody.get("validationCode"))))
+                .success(otpService.validateOtp(customUserDetailsService.getOwnEmail(), Integer.parseInt(requestBody.get("validationCode"))))
                 .build();
 
         return response;

@@ -13,14 +13,8 @@ public class EmailService {
     private final OtpService otpService;
     private final CustomUserDetailsService userDetailsService;
 
-    public boolean sendOtpMessage(String email) {
-        SimpleMailMessage mailMessage;
-
-        if(!isSeoultechEmailFormat(email) || !userDetailsService.isAvailableForEmail(email)){
-            return false;
-        }
-
-        mailMessage = createOtpMailMessage(email);
+    public boolean sendOtpMessage() {
+        SimpleMailMessage mailMessage = createOtpMailMessage(userDetailsService.getOwnEmail());
         javaMailSender.send(mailMessage);
         return true;
     }
@@ -42,10 +36,5 @@ public class EmailService {
         mailMessage.setText(content);
 
         return mailMessage;
-    }
-
-    private boolean isSeoultechEmailFormat(String email){
-        String emailFormat = "^[a-zA-Z0-9._$+-]+@seoultech.ac.kr";
-        return email.matches(emailFormat);
     }
 }

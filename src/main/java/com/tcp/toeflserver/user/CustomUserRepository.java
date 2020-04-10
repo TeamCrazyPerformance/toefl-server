@@ -20,16 +20,20 @@ public class CustomUserRepository {
         return mapper.selectUserById(id);
     }
 
-    public CustomUser findUserByEmail(String email)
+    CustomUser findUserByEmail(String email)
     {
         return mapper.selectUserByEmail(email);
     }
 
-    public CustomUser findUserByNickname(String nickname){
+    CustomUser findUserByNickname(String nickname){
         return mapper.selectUserByNickname(nickname);
     }
 
-    public void saveUser(CustomUser user) throws DataAccessException{
+    void saveUser(CustomUser user) throws DataAccessException{
         mapper.insertUser(user);
+    }
+
+    void updateAuthority(String id, String authority) throws DataAccessException{
+        mapper.updateAuthority(id, authority);
     }
 }
