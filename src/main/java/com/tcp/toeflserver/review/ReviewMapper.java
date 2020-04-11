@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface ReviewMapper {
 
-    @Select("SELECT reviews.* FROM ( SELECT * FROM review WHERE user_id=#{id} order by ${sort} ${order})reviews LIMIT #{page}, 20")
+    @Select("SELECT reviews.* FROM ( SELECT * FROM review WHERE user_id=#{id} order by ${sort} ${order})reviews LIMIT #{offset}, 20")
     @ResultType(com.tcp.toeflserver.review.Review.class)
     List<Review> selectReviewsByUser(SelectReview review);
 
-    @Select("SELECT reviews.* FROM ( SELECT * FROM review WHERE place_id=#{id} order by ${sort} ${order})reviews LIMIT #{page}, 20")
+    @Select("SELECT reviews.* FROM ( SELECT * FROM review WHERE place_id=#{id} order by ${sort} ${order})reviews LIMIT #{offset}, 20")
     @ResultType(com.tcp.toeflserver.review.Review.class)
     List<Review> selectReviewsByPlace(SelectReview selectReview);
 

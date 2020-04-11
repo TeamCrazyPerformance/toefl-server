@@ -8,4 +8,8 @@ public class SelectReview {
     private int page;
     private String sort;
     private String order;
+
+    int getOffset() {
+        return 20 * page;
+    }
 }

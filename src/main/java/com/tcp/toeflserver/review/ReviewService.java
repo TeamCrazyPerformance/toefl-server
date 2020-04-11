@@ -11,12 +11,10 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
 
     List<Review> getReviewsByUser(SelectReview selectReview){
-        selectReview.setPage(selectReview.getPage()*20);
         return reviewRepository.selectReviewsByUser(selectReview);
     }
 
     List<Review> getReviewsByPlace(SelectReview selectReview){
-        selectReview.setPage(selectReview.getPage()*20);
         return reviewRepository.selectReviewsByPlace(selectReview);
     }
 
