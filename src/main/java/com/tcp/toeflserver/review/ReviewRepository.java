@@ -32,7 +32,7 @@ public class ReviewRepository {
         return reviewMapper.selectReviewsByUser(selectReview);
     }
 
-    public Review selectReviewByIndex(int index) {
-        return reviewMapper.selectReviewByIndex(index);
+    public Review selectReviewByIndex(int id) {
+        return reviewMapper.selectReviewByIndex(id);
     }
 }

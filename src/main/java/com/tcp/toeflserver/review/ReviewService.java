@@ -20,13 +20,13 @@ public class ReviewService {
         return reviewRepository.selectReviewsByPlace(selectReview);
     }
 
-    String removeReview(int index) {
+    String removeReview(int id) {
         String ownUserId = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
-            if(!reviewRepository.selectReviewByIndex(index).getUserId().equals(ownUserId)){
+            if(!reviewRepository.selectReviewByIndex(id).getUserId().equals(ownUserId)){
                 return "It's not yours";
             }
-            reviewRepository.deleteReview(index);
+            reviewRepository.deleteReview(id);
             return "Success";
         }
         catch (Exception e){

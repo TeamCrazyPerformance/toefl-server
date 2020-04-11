@@ -20,9 +20,9 @@ public interface ReviewMapper {
 
     @Insert("insert into review(place_id, user_id, score, date, content) values (#{placeId}, #{userId}, #{score}, #{date}, #{content})")
     void insertReview(Review review);
-    @Delete("delete from review where index=#{index}")
-    void deleteReview(int reviewIndex);
+    @Delete("delete from review where id = #{id}")
+    void deleteReview(int id);
 
-    @Select("SELECT * FROM review WHERE index=#{index}")
-    Review selectReviewByIndex(int index);
+    @Select("SELECT * FROM review WHERE id = #{id}")
+    Review selectReviewByIndex(int id);
 }
