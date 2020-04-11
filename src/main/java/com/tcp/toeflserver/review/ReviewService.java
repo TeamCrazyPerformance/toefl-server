@@ -11,6 +11,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
 
     List<Review> getReviewsByUser(SelectReview selectReview){
+        selectReview.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
         return reviewRepository.selectReviewsByUser(selectReview);
     }
 

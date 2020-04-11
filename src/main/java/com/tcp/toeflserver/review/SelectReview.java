@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class SelectReview {
-    private String id;
+    private String userId;
+    private String placeId;
     private int page;
     private String sort;
     private String order;

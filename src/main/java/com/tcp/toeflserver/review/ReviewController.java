@@ -14,7 +14,7 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @GetMapping("/place")
+    @GetMapping
     public ReviewApiResponse getReviewByPlace(SelectReview selectReview) {
         List<Review> reviews = reviewService.getReviewsByPlace(selectReview);
 
@@ -26,7 +26,7 @@ public class ReviewController {
         return response;
     }
 
-    @GetMapping("/user")
+    @GetMapping("/myreview")
     public ReviewApiResponse getReviewsByUser(SelectReview selectReview) {
         List<Review> reviews = reviewService.getReviewsByUser(selectReview);
 
