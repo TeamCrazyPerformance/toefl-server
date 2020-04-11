@@ -31,4 +31,8 @@ public class ReviewRepository {
     public List<Review> selectReviewsByUser(SelectReview selectReview) {
         return reviewMapper.selectReviewsByUser(selectReview);
     }
+
+    public Review selectReviewByIndex(int index) {
+        return reviewMapper.selectReviewByIndex(index);
+    }
 }

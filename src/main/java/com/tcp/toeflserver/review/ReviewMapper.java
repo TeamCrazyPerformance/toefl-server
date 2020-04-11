@@ -22,4 +22,7 @@ public interface ReviewMapper {
     void insertReview(Review review);
     @Delete("delete from review where index=#{index}")
     void deleteReview(int reviewIndex);
+
+    @Select("SELECT * FROM review WHERE index=#{index}")
+    Review selectReviewByIndex(int index);
 }

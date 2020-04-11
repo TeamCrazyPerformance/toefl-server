@@ -21,7 +21,11 @@ public class ReviewService {
     }
 
     String removeReview(int index) {
+        String ownUserId = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
+            if(!reviewRepository.selectReviewByIndex(index).getUserId().equals(ownUserId)){
+                return "It's not yours";
+            }
             reviewRepository.deleteReview(index);
             return "Success";
         }
