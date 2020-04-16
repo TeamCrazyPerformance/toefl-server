@@ -2,6 +2,7 @@ package com.tcp.toeflserver.review;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,28 +16,23 @@ public class ReviewRepository {
         this.reviewMapper = sqlSession.getMapper(ReviewMapper.class);
     }
 
-    public boolean deleteReview(int index) {
+    public void deleteReview(int index) throws DataAccessException {
         reviewMapper.deleteReview(index);
-        return true;
     }
 
-    public String insertReview(Review review) {
-        try {
-            reviewMapper.insertReview(review);
-            return "Success";
-        }
-        catch (Exception e){
-            return e.getMessage();
-        }
+    public void insertReview(Review review) throws DataAccessException {
+        reviewMapper.insertReview(review);
     }
 
     public List<Review> selectReviewsByPlace(SelectReview selectReview) {
-        List<Review> reviews = reviewMapper.selectReviewsByPlace(selectReview);
-        return  reviews;
+        return reviewMapper.selectReviewsByPlace(selectReview);
     }
 
     public List<Review> selectReviewsByUser(SelectReview selectReview) {
-        List<Review> reviews = reviewMapper.selectReviewsByUser(selectReview);
-        return  reviews;
+        return reviewMapper.selectReviewsByUser(selectReview);
+    }
+
+    public Review selectReviewByIndex(int id) {
+        return reviewMapper.selectReviewByIndex(id);
     }
 }

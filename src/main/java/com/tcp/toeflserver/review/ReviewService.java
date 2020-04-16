@@ -1,43 +1,48 @@
 package com.tcp.toeflserver.review;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class ReviewService {
-    @Autowired
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
-
-    public List<Review> getReviewsByUser(SelectReview selectReview){
+    List<Review> getReviewsByUser(SelectReview selectReview){
+        selectReview.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
         return reviewRepository.selectReviewsByUser(selectReview);
     }
 
-    public List<Review> getReviewsByPlace(SelectReview selectReview){
+    List<Review> getReviewsByPlace(SelectReview selectReview){
         return reviewRepository.selectReviewsByPlace(selectReview);
     }
 
-    public String removeReview(int index) {
+    String removeReview(int id) {
+        String ownUserId = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
-            reviewRepository.deleteReview(index);
-        }
-        catch (Exception e){
-           return e.getMessage();
-        }
-        return "Success";
-    }
-
-    public String addReview(Review review){
-        try {
-            Review addReview = new Review(review);
-            reviewRepository.insertReview(addReview);
+            if(!reviewRepository.selectReviewByIndex(id).getUserId().equals(ownUserId)){
+                return "It's not yours";
+            }
+            reviewRepository.deleteReview(id);
+            return "Success";
         }
         catch (Exception e){
             return e.getMessage();
         }
-        return "Success";
+    }
+
+    String addReview(Review review){
+        review.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
+        review.setTimeToNow();
+
+        try {
+            reviewRepository.insertReview(review);
+            return "Success";
+        }
+        catch (Exception e){
+            return e.getMessage();
+        }
     }
 }

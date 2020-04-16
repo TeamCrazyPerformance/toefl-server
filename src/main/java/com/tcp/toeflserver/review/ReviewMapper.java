@@ -10,16 +10,19 @@ import java.util.List;
 
 public interface ReviewMapper {
 
-    @Select("SELECT * FROM ( SELECT *, ROW_NUMBER() OVER (ORDER BY 'date' ${order}) rnum FROM review WHERE user_id=#{id})reviews WHERE rnum BETWEEN (#{page}-1)*20 AND #{page}*20")
+    @Select("SELECT reviews.* FROM ( SELECT * FROM review WHERE user_id=#{userId} order by ${sort} ${order})reviews LIMIT #{offset}, 20")
     @ResultType(com.tcp.toeflserver.review.Review.class)
     List<Review> selectReviewsByUser(SelectReview review);
 
-    @Select("SELECT * FROM ( SELECT *, ROW_NUMBER() OVER (ORDER BY #{sort} ${order}) rnum FROM review WHERE place_id=#{id})reviews WHERE rnum BETWEEN (#{page}-1)*20 AND #{page}*20")
+    @Select("SELECT reviews.* FROM ( SELECT * FROM review WHERE place_id=#{placeId} order by ${sort} ${order})reviews LIMIT #{offset}, 20")
     @ResultType(com.tcp.toeflserver.review.Review.class)
     List<Review> selectReviewsByPlace(SelectReview selectReview);
 
-    @Insert("insert into review(index, place_id, user_id, score, date, content) values (#{index}, #{place_id}, #{user_id}, #{score}, #{date}, #{content})")
+    @Insert("insert into review(place_id, user_id, score, date, content) values (#{placeId}, #{userId}, #{score}, #{date}, #{content})")
     void insertReview(Review review);
-    @Delete("delete from review where index=#{index}")
-    void deleteReview(int reviewIndex);
+    @Delete("delete from review where id = #{id}")
+    void deleteReview(int id);
+
+    @Select("SELECT * FROM review WHERE id = #{id}")
+    Review selectReviewByIndex(int id);
 }
