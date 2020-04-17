@@ -15,8 +15,8 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping
-    public ReviewApiResponse getReviewByPlace(SelectReview selectReview) {
-        List<Review> reviews = reviewService.getReviewsByPlace(selectReview);
+    public ReviewApiResponse getReviewsByPlace(GetReviewsParams getReviewsParams) {
+        List<Review> reviews = reviewService.getReviewsByPlace(getReviewsParams);
 
         ReviewApiResponse response = ReviewApiResponse.builder()
                 .success(reviews != null)
@@ -27,8 +27,8 @@ public class ReviewController {
     }
 
     @GetMapping("/myreview")
-    public ReviewApiResponse getReviewsByUser(SelectReview selectReview) {
-        List<Review> reviews = reviewService.getReviewsByUser(selectReview);
+    public ReviewApiResponse getMyReviews(GetReviewsParams getReviewsParams) {
+        List<Review> reviews = reviewService.getMyReviews(getReviewsParams);
 
         ReviewApiResponse response = ReviewApiResponse.builder()
                 .success(reviews != null)
@@ -40,26 +40,36 @@ public class ReviewController {
 
     @PostMapping
     public ReviewApiResponse addReview(@RequestBody Review review) {
-        String added = reviewService.addReview(review);
-        boolean success = added.equals("Success");
-
-        ReviewApiResponse response = ReviewApiResponse.builder()
-                .success(success)
-                .errMsg(success ? null : added)
-                .build();
+        ReviewApiResponse response;
+        try{
+            reviewService.addReview(review);
+            response = ReviewApiResponse.builder()
+                    .success(true)
+                    .build();
+        } catch (Exception e){
+            response = ReviewApiResponse.builder()
+                    .success(false)
+                    .errMsg(e.getMessage())
+                    .build();
+        }
 
         return response;
     }
 
     @DeleteMapping("/{reviewId}")
     public ReviewApiResponse deleteReview(@PathVariable String reviewId) {
-        String deleted = reviewService.removeReview(Integer.parseInt(reviewId));
-        boolean success = deleted.equals("Success");
-
-        ReviewApiResponse response = ReviewApiResponse.builder()
-                .success(success)
-                .errMsg(success ? null : deleted)
-                .build();
+        ReviewApiResponse response;
+        try{
+            reviewService.removeReview(Integer.parseInt(reviewId));
+            response = ReviewApiResponse.builder()
+                    .success(true)
+                    .build();
+        } catch (Exception e){
+            response = ReviewApiResponse.builder()
+                    .success(false)
+                    .errMsg(e.getMessage())
+                    .build();
+        }
 
         return response;
     }

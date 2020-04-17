@@ -12,11 +12,11 @@ public interface ReviewMapper {
 
     @Select("SELECT reviews.* FROM ( SELECT * FROM review WHERE user_id=#{userId} order by ${sort} ${order})reviews LIMIT #{offset}, 20")
     @ResultType(com.tcp.toeflserver.review.Review.class)
-    List<Review> selectReviewsByUser(SelectReview review);
+    List<Review> selectReviewsByUser(GetReviewsParams getReviewsParams);
 
     @Select("SELECT reviews.* FROM ( SELECT * FROM review WHERE place_id=#{placeId} order by ${sort} ${order})reviews LIMIT #{offset}, 20")
     @ResultType(com.tcp.toeflserver.review.Review.class)
-    List<Review> selectReviewsByPlace(SelectReview selectReview);
+    List<Review> selectReviewsByPlace(GetReviewsParams getReviewsParams);
 
     @Insert("insert into review(place_id, user_id, score, date, content) values (#{placeId}, #{userId}, #{score}, #{date}, #{content})")
     void insertReview(Review review);

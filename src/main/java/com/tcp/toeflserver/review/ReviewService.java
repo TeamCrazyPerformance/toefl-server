@@ -10,39 +10,29 @@ import java.util.List;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
 
-    List<Review> getReviewsByUser(SelectReview selectReview){
+    List<Review> getMyReviews(GetReviewsParams selectReview) {
         selectReview.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
         return reviewRepository.selectReviewsByUser(selectReview);
     }
 
-    List<Review> getReviewsByPlace(SelectReview selectReview){
+    List<Review> getReviewsByPlace(GetReviewsParams selectReview) {
         return reviewRepository.selectReviewsByPlace(selectReview);
     }
 
-    String removeReview(int id) {
+    void removeReview(int id) throws Exception {
         String ownUserId = SecurityContextHolder.getContext().getAuthentication().getName();
-        try {
-            if(!reviewRepository.selectReviewByIndex(id).getUserId().equals(ownUserId)){
-                return "It's not yours";
-            }
-            reviewRepository.deleteReview(id);
-            return "Success";
+        Review targetReview = reviewRepository.selectReviewByIndex(id);
+
+        if (!targetReview.getUserId().equals(ownUserId)) {
+            throw new Exception("it's not yours");
         }
-        catch (Exception e){
-            return e.getMessage();
-        }
+
+        reviewRepository.deleteReview(id);
     }
 
-    String addReview(Review review){
+    void addReview(Review review) throws Exception {
         review.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
         review.setTimeToNow();
-
-        try {
-            reviewRepository.insertReview(review);
-            return "Success";
-        }
-        catch (Exception e){
-            return e.getMessage();
-        }
+        reviewRepository.insertReview(review);
     }
 }
