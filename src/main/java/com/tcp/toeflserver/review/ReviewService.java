@@ -10,13 +10,13 @@ import java.util.List;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
 
-    List<Review> getMyReviews(GetReviewsParams selectReview) {
-        selectReview.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
-        return reviewRepository.selectReviewsByUser(selectReview);
+    List<Review> getReviewsByRequester(GetReviewsParams getReviewsParams) {
+        getReviewsParams.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
+        return reviewRepository.selectReviewsByUser(getReviewsParams);
     }
 
-    List<Review> getReviewsByPlace(GetReviewsParams selectReview) {
-        return reviewRepository.selectReviewsByPlace(selectReview);
+    List<Review> getReviewsByPlace(GetReviewsParams getReviewsParams) {
+        return reviewRepository.selectReviewsByPlace(getReviewsParams);
     }
 
     void removeReview(int id) throws Exception {

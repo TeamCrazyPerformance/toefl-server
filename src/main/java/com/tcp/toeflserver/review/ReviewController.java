@@ -28,7 +28,7 @@ public class ReviewController {
 
     @GetMapping("/myreview")
     public ReviewApiResponse getMyReviews(GetReviewsParams getReviewsParams) {
-        List<Review> reviews = reviewService.getMyReviews(getReviewsParams);
+        List<Review> reviews = reviewService.getReviewsByRequester(getReviewsParams);
 
         ReviewApiResponse response = ReviewApiResponse.builder()
                 .success(reviews != null)
