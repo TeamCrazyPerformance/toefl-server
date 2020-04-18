@@ -24,12 +24,12 @@ public class ReviewRepository {
         reviewMapper.insertReview(review);
     }
 
-    public List<Review> selectReviewsByPlace(SelectReview selectReview) {
-        return reviewMapper.selectReviewsByPlace(selectReview);
+    public List<Review> selectReviewsByPlace(GetReviewsParams getReviewsParams) {
+        return reviewMapper.selectReviewsByPlace(getReviewsParams);
     }
 
-    public List<Review> selectReviewsByUser(SelectReview selectReview) {
-        return reviewMapper.selectReviewsByUser(selectReview);
+    public List<Review> selectReviewsByUser(GetReviewsParams getReviewsParams) {
+        return reviewMapper.selectReviewsByUser(getReviewsParams);
     }
 
     public Review selectReviewByIndex(int id) {

@@ -10,39 +10,29 @@ import java.util.List;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
 
-    List<Review> getReviewsByUser(SelectReview selectReview){
-        selectReview.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
-        return reviewRepository.selectReviewsByUser(selectReview);
+    List<Review> getReviewsByRequester(GetReviewsParams getReviewsParams) {
+        getReviewsParams.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
+        return reviewRepository.selectReviewsByUser(getReviewsParams);
     }
 
-    List<Review> getReviewsByPlace(SelectReview selectReview){
-        return reviewRepository.selectReviewsByPlace(selectReview);
+    List<Review> getReviewsByPlace(GetReviewsParams getReviewsParams) {
+        return reviewRepository.selectReviewsByPlace(getReviewsParams);
     }
 
-    String removeReview(int id) {
+    void removeReview(int id) throws Exception {
         String ownUserId = SecurityContextHolder.getContext().getAuthentication().getName();
-        try {
-            if(!reviewRepository.selectReviewByIndex(id).getUserId().equals(ownUserId)){
-                return "It's not yours";
-            }
-            reviewRepository.deleteReview(id);
-            return "Success";
+        Review targetReview = reviewRepository.selectReviewByIndex(id);
+
+        if (!targetReview.getUserId().equals(ownUserId)) {
+            throw new Exception("it's not yours");
         }
-        catch (Exception e){
-            return e.getMessage();
-        }
+
+        reviewRepository.deleteReview(id);
     }
 
-    String addReview(Review review){
+    void addReview(Review review) throws Exception {
         review.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
         review.setTimeToNow();
-
-        try {
-            reviewRepository.insertReview(review);
-            return "Success";
-        }
-        catch (Exception e){
-            return e.getMessage();
-        }
+        reviewRepository.insertReview(review);
     }
 }

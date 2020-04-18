@@ -3,7 +3,7 @@ package com.tcp.toeflserver.review;
 import lombok.Data;
 
 @Data
-public class SelectReview {
+public class GetReviewsParams {
     private String userId;
     private String placeId;
     private int page;
