@@ -14,18 +14,14 @@ public class PlaceRepository {
     Place selectPlaceById(String placeId){
         return placeMapper.selectPlaceById(placeId);
     }
-
     public void updatePlace(Place place){
         placeMapper.updatePlace(place);
     }
-    public void insertPlace(Place place){
-        placeMapper.insertPlace(place);
-    }
 
-    int selectPlaceCount(String placeId){
-        return placeMapper.selectPlaceCount(placeId);
-    }
     int selectPlaceReviewScoreSum(String placeId){
         return placeMapper.selectPlaceReviewScoreSum(placeId);
+    }
+    int selectPlaceCount(String placeId){
+        return placeMapper.selectPlaceCount(placeId);
     }
 }

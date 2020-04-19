@@ -12,18 +12,9 @@ public class PlaceService {
         return placeRepository.selectPlaceById(placeId);
     }
 
-    public void addPlace(String placeId) {
-        Place place = getNewPlaceInfo(placeId);
-        placeRepository.insertPlace(place);
-    }
-
     public void updatePlace(String placeId) {
         Place place = getNewPlaceInfo(placeId);
         placeRepository.updatePlace(place);
-    }
-
-    private float getPlaceScoreAverage(String placeId) {
-        return (float) placeRepository.selectPlaceReviewScoreSum(placeId) / (float) placeRepository.selectPlaceCount(placeId);
     }
 
     private Place getNewPlaceInfo(String placeId) {
@@ -31,5 +22,9 @@ public class PlaceService {
         Place place = new Place(placeId, score);
 
         return place;
+    }
+
+    private float getPlaceScoreAverage(String placeId) {
+        return (float) placeRepository.selectPlaceReviewScoreSum(placeId) / (float) placeRepository.selectPlaceCount(placeId);
     }
 }
