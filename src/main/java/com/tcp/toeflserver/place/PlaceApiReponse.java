@@ -6,12 +6,14 @@ import lombok.Builder;
 import java.util.List;
 
 public class PlaceApiReponse {
-    String success;
+    boolean success;
+    String errMsg;
     Place place;
 
     @Builder
-    public PlaceApiReponse(String success, Place place) {
+    public PlaceApiReponse(boolean success, String errMsg,Place place) {
         this.success = success;
+        this.errMsg = errMsg;
         this.place = place;
     }
 }
