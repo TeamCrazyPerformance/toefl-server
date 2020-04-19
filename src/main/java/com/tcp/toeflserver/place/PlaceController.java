@@ -13,11 +13,22 @@ public class PlaceController {
 
     @GetMapping("/place/{placeId}/star")
     public PlaceApiReponse getPlace(@PathVariable String placeId){
-        Place place = placeService.getPlaceById(placeId);
+        PlaceApiReponse response;
+        try {
+            Place place = placeService.getPlaceById(placeId);
 
-        PlaceApiReponse response = PlaceApiReponse.builder()
-                .place(place)
-                .build();
+            response = PlaceApiReponse.builder()
+                    .success(true)
+                    .place(place)
+                    .build();
+
+        }
+        catch (Exception e){
+            response = PlaceApiReponse.builder()
+                    .success(false)
+                    .errMsg(e.getMessage())
+                    .build();
+        }
 
         return response;
     }
