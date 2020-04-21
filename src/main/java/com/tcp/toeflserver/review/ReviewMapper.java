@@ -25,4 +25,10 @@ public interface ReviewMapper {
 
     @Select("SELECT * FROM review WHERE id = #{id}")
     Review selectReviewByIndex(int id);
+
+    @Select("SELECT count(*) FROM review WHERE user_id = #{userId}")
+    int countReviewsOfUser(String userId);
+
+    @Select("SELECT count(*) FROM review WHERE place_id = #{placeId}")
+    int countReviewsOfPlace(String placeId);
 }

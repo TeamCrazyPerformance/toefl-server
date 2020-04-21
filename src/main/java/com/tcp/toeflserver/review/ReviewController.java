@@ -20,7 +20,8 @@ public class ReviewController {
 
         ReviewApiResponse response = ReviewApiResponse.builder()
                 .success(reviews != null)
-                .reviewList(Optional.ofNullable(reviews).orElse(new ArrayList<>()))
+                .totalReview(reviewService.countReviewsOfPlace(getReviewsParams.getPlaceId()))
+                .reviews(Optional.ofNullable(reviews).orElse(new ArrayList<>()))
                 .build();
 
         return response;
@@ -32,7 +33,8 @@ public class ReviewController {
 
         ReviewApiResponse response = ReviewApiResponse.builder()
                 .success(reviews != null)
-                .reviewList(Optional.ofNullable(reviews).orElse(new ArrayList<>()))
+                .totalReview(reviewService.countReviewsOfRequester())
+                .reviews(Optional.ofNullable(reviews).orElse(new ArrayList<>()))
                 .build();
 
         return response;

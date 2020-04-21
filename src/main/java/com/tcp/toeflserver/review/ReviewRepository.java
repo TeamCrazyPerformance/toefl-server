@@ -35,4 +35,12 @@ public class ReviewRepository {
     public Review selectReviewByIndex(int id) {
         return reviewMapper.selectReviewByIndex(id);
     }
+
+    public int countReviewsOfUser(String userId){
+        return reviewMapper.countReviewsOfUser(userId);
+    }
+
+    public int countReviewsOfPlace(String placeId) {
+        return reviewMapper.countReviewsOfPlace(placeId);
+    }
 }
