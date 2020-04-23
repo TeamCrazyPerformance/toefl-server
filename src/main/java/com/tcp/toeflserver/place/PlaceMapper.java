@@ -5,7 +5,7 @@ public interface PlaceMapper {
     @ResultType(Place.class)
     Place selectPlaceById(String id);
 
-    @Insert("insert into toefl.place(id, score) values(#{id}, #{score}) on duplicate key update id=#{id}, score=#{score} ")
+    @Insert("insert into toefl.place(id, score) values(#{id}, #{score}) on duplicate key update score=#{score}")
     void updatePlace(Place place);
 
     @Select("select count(if(place_id=#{placeId}, 1, null)) from toefl.review")
