@@ -8,10 +8,6 @@ import org.springframework.stereotype.Service;
 public class PlaceService {
     private final PlaceRepository placeRepository;
 
-    Place getPlaceById(String placeId) {
-        return placeRepository.selectPlaceById(placeId);
-    }
-
     public void updatePlace(String placeId) {
         Place place = getNewPlaceInfo(placeId);
         placeRepository.updatePlace(place);

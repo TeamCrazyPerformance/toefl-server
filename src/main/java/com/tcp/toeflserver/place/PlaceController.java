@@ -15,7 +15,7 @@ public class PlaceController {
     public PlaceApiReponse getPlace(@PathVariable String placeId){
         PlaceApiReponse response;
         try {
-            Place place = placeService.getPlaceById(placeId);
+            Place place = placeService.getNewPlaceInfo(placeId);
 
             response = PlaceApiReponse.builder()
                     .success(true)

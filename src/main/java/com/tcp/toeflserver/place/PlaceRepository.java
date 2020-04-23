@@ -11,9 +11,6 @@ public class PlaceRepository {
         this.placeMapper = sqlSession.getMapper(PlaceMapper.class);
     }
 
-    Place selectPlaceById(String placeId){
-        return placeMapper.selectPlaceById(placeId);
-    }
     public void updatePlace(Place place){
         placeMapper.updatePlace(place);
     }
