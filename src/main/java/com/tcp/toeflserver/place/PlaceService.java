@@ -17,14 +17,14 @@ public class PlaceService {
         placeRepository.updatePlace(place);
     }
 
-    private Place getNewPlaceInfo(String placeId) {
-        float score = getPlaceScoreAverage(placeId);
+    public Place getNewPlaceInfo(String placeId) {
+        float score = getPlaceReviewScoreAverage(placeId);
         Place place = new Place(placeId, score);
 
         return place;
     }
 
-    private float getPlaceScoreAverage(String placeId) {
-        return (float) placeRepository.selectPlaceReviewScoreSum(placeId) / (float) placeRepository.selectPlaceCount(placeId);
+    private float getPlaceReviewScoreAverage(String placeId) {
+        return (float) placeRepository.selectPlaceReviewScoreAverage(placeId);
     }
 }

@@ -18,10 +18,7 @@ public class PlaceRepository {
         placeMapper.updatePlace(place);
     }
 
-    int selectPlaceReviewScoreSum(String placeId){
-        return placeMapper.selectPlaceReviewScoreSum(placeId);
-    }
-    int selectPlaceCount(String placeId){
-        return placeMapper.selectPlaceCount(placeId);
+    int selectPlaceReviewScoreAverage(String placeId){
+        return placeMapper.selectPlaceReviewAverageScore(placeId);
     }
 }
