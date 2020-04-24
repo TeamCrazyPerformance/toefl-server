@@ -9,6 +9,7 @@
     <mappers>
         <mapper class="com.tcp.toeflserver.user.CustomUserMapper"/>
         <mapper class="com.tcp.toeflserver.review.ReviewMapper"/>
+        <mapper class="com.tcp.toeflserver.place.PlaceMapper"/>
     </mappers>
 </configuration>
 
