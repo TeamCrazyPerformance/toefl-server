@@ -1,10 +1,11 @@
 package com.tcp.toeflserver.place;
 
-import com.tcp.toeflserver.review.Review;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
+import lombok.Getter;
 
-import java.util.List;
-
+@Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PlaceApiResponse {
     boolean success;
     String errMsg;
