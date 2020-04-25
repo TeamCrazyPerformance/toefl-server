@@ -5,13 +5,13 @@ import lombok.Builder;
 
 import java.util.List;
 
-public class PlaceApiReponse {
+public class PlaceApiResponse {
     boolean success;
     String errMsg;
     Place place;
 
     @Builder
-    public PlaceApiReponse(boolean success, String errMsg,Place place) {
+    public PlaceApiResponse(boolean success, String errMsg, Place place) {
         this.success = success;
         this.errMsg = errMsg;
         this.place = place;
