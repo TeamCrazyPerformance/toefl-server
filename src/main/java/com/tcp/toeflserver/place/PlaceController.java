@@ -15,11 +15,9 @@ public class PlaceController {
     public PlaceApiResponse getPlace(@PathVariable String placeId){
         PlaceApiResponse response;
         try {
-            Place place = placeService.getNewPlaceInfo(placeId);
-
             response = PlaceApiResponse.builder()
                     .success(true)
-                    .place(place)
+                    .score(placeService.getPlaceReviewScoreAverage(placeId))
                     .build();
 
         }

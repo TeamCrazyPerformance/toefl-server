@@ -5,16 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PlaceApiResponse {
+class PlaceApiResponse {
     boolean success;
     String errMsg;
-    Place place;
-
-    @Builder
-    public PlaceApiResponse(boolean success, String errMsg, Place place) {
-        this.success = success;
-        this.errMsg = errMsg;
-        this.place = place;
-    }
+    float score;
 }

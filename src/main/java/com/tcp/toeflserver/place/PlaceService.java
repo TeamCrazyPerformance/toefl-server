@@ -9,18 +9,10 @@ public class PlaceService {
     private final PlaceRepository placeRepository;
 
     public void updatePlace(String placeId) {
-        Place place = getNewPlaceInfo(placeId);
-        placeRepository.updatePlace(place);
+        placeRepository.updatePlace(new Place(placeId, getPlaceReviewScoreAverage(placeId)));
     }
 
-    public Place getNewPlaceInfo(String placeId) {
-        float score = getPlaceReviewScoreAverage(placeId);
-        Place place = new Place(placeId, score);
-
-        return place;
-    }
-
-    private float getPlaceReviewScoreAverage(String placeId) {
-        return (float) placeRepository.selectPlaceReviewScoreAverage(placeId);
+    public float getPlaceReviewScoreAverage(String placeId) {
+        return placeRepository.selectPlaceReviewScoreAverage(placeId);
     }
 }
