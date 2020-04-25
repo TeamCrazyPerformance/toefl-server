@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Alias("review")
-@JsonIgnoreProperties({"date", "userId"})
+@JsonIgnoreProperties({"date"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Review {
     private String userId;

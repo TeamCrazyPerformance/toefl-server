@@ -11,9 +11,8 @@ import java.util.List;
 @Builder
 public class ReviewApiResponse {
     boolean success;
-    List<Review> reviewList;
-    Integer page;
     String errMsg;
-    String sortBy;
-    String orderBy;
+    Integer totalReview;
+    List<Review> reviews;
+    Integer page;
 }
