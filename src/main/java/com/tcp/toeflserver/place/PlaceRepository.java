@@ -15,7 +15,7 @@ public class PlaceRepository {
         placeMapper.updatePlace(place);
     }
 
-    int selectPlaceReviewScoreAverage(String placeId){
+    float selectPlaceReviewScoreAverage(String placeId){
         return placeMapper.selectPlaceReviewAverageScore(placeId);
     }
 }

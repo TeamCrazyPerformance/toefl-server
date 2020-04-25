@@ -7,6 +7,5 @@ public interface PlaceMapper {
     void updatePlace(Place place);
 
     @Select("select avg(score) from toefl.review where place_id=#{placeId}")
-    @ResultType(Place.class)
-    int selectPlaceReviewAverageScore(String placeId);
+    float selectPlaceReviewAverageScore(String placeId);
 }
